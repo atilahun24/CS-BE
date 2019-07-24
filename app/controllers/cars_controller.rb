@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CarsController < OpenReadController
-  before_action :set_car, only: %i[show update destroy]
+  before_action :set_car, only: %i[update destroy]
 
   # GET /cars
   def index
@@ -12,7 +12,7 @@ class CarsController < OpenReadController
 
   # GET /cars/1
   def show
-    render json: @car
+    render json: Car.find(params[:id])
   end
 
   # POST /cars
@@ -21,7 +21,7 @@ class CarsController < OpenReadController
     @car = current_user.cars.build(car_params)
 
     if @car.save
-      render json: @car, status: :created, location: @car
+      render json: @car, status: :created
     else
       render json: @car.errors, status: :unprocessable_entity
     end
@@ -45,11 +45,11 @@ class CarsController < OpenReadController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_car
-    @car = Car.find(params[:id])
+    @car = current_user.cars.find(params[:id])
   end
 
   # Only allow a trusted parameter "white list" through.
   def car_params
-    params.require(:car).permit(:make, :model, :year, :vehicle_type, :grade)
+    params.require(:car).permit(:make, :model, :year, :vehicle_type, :grade, :description)
   end
 end

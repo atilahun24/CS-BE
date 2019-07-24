@@ -11,7 +11,8 @@ curl "http://localhost:4741/cars" \
       "model": "'"${MODEL}"'",
       "year": "'"${YEAR}"'",
       "vehicle": "'"${TYPE}"'",
-      "grade": "'"${GRADE}"'"
+      "grade": "'"${GRADE}"'",
+      "description": "'"${DESC}"'"
     }
   }'
 
